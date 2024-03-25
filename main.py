@@ -1,0 +1,68 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.svm import SVC
+from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
+from sklearn.decomposition import PCA
+from sklearn.metrics import mean_absolute_error
+from joblib import dump, load
+import numpy as np
+
+
+df = pd.read_csv("mnist_train.csv")
+df.dropna(inplace=True)
+
+df = df[0:5000]
+
+Y = df["label"]
+X = df.drop("label", axis=1)
+
+# print("CV")
+# scores = cross_val_score(SVC(), X, Y, cv=8)
+# print("Scores by CV:",scores)
+
+
+print("PCA")
+pca = PCA(n_components=784)
+pca.fit(X)
+dump(pca, "pca_model.pkl")
+
+
+X = pca.transform(X)
+
+print("Split")
+X_train, X_test, Y_train, Y_test = train_test_split(
+    X, Y, test_size=0.15, random_state=42
+)
+
+
+print("GridSearchCV")
+model = GridSearchCV(
+    SVC(),
+    {
+        "C": list(map(lambda x: x, range(1, 10))),
+        "kernel": ["linear", "poly", "rbf"],
+        # "degree": list(map(lambda x: x, range(1, 4))),
+        "tol": list(map(lambda x: x / 1e5, range(1, 10))),
+    },
+    n_jobs=-1,
+)
+
+print("GridSearchCV Fit")
+model.fit(X_train, Y_train)
+print("SVC best params:", model.best_params_)
+
+print("Mean Absolute Error: ", mean_absolute_error(Y, model.predict(X)))
+
+print("Save best model")
+model = model.best_estimator_
+dump(model, "model.pkl")
+
+
+loaded_model = load("model.pkl")
+print("Test Mean Absolute Error: ", mean_absolute_error(Y_test, loaded_model.predict(X_test)))
+
+predictions = loaded_model.predict(X_test)
+
+plt.scatter(x=np.arange(Y_test.size), y=Y_test, s=20)
+plt.scatter(x=np.arange(predictions.size), y=predictions, s=10)
+plt.show()
