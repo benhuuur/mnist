@@ -2,7 +2,7 @@ using System.Drawing;
 
 namespace ImageProcessing;
 
-public static class ImageGenerator
+public static partial class ImageGenerator
 {
     public static Bitmap GenerateImageFromGrayVector(byte[] grayVector, int height = 28, int width = 28)
     {
