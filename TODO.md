@@ -2,5 +2,6 @@
 
 Making an AI to know what the number in write hand
 
-- Making the csv clean;
-- Making the first Train with SVC
+- Making c3 code to get image from vector;
+- Organize files;
+- Saving models;
