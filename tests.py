@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import mean_absolute_error, accuracy_score
 from joblib import load
 import numpy as np
 
@@ -19,6 +19,7 @@ X = loaded_pca.transform(X)
 
 loaded_model = load("models/svc_model.pkl")
 print("Test Mean Absolute Error: ", mean_absolute_error(Y, loaded_model.predict(X)))
+print("Test Accuracy: ", accuracy_score(Y, loaded_model.predict(X)))
 
 predictions = loaded_model.predict(X)
 
