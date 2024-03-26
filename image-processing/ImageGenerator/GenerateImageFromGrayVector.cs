@@ -4,7 +4,11 @@ namespace ImageProcessing;
 
 public static partial class ImageGenerator
 {
-    public static Bitmap GenerateImageFromGrayVector(byte[] grayVector, int height = 28, int width = 28)
+    public static Bitmap GenerateImageFromGrayVector(
+        byte[] grayVector,
+        int height = 28,
+        int width = 28
+    )
     {
         int index = 0;
         Color pixelColor;
@@ -22,7 +26,7 @@ public static partial class ImageGenerator
             }
         }
 
-        bitmap.Save("output.png", System.Drawing.Imaging.ImageFormat.Png);
+        bitmap.Save("images/output.png", System.Drawing.Imaging.ImageFormat.Png);
         return bitmap;
     }
 }
