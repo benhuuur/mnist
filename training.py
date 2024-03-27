@@ -19,7 +19,7 @@ scores = cross_val_score(SVC(), X, Y, cv=8)
 print("Scores by CV:",scores)
 
 print("PCA")
-pca = PCA(n_components=784)
+pca = PCA(n_components=392)
 pca.fit(X)
 dump(pca, "models/pca_model.pkl")
 
@@ -27,7 +27,7 @@ X = pca.transform(X)
 
 print("Split")
 X_train, X_test, Y_train, Y_test = train_test_split(
-    X, Y, test_size=0.15, random_state=42
+    X, Y, test_size=0.35, random_state=42
 )
 
 print("GridSearchCV")
