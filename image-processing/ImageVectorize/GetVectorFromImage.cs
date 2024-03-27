@@ -1,6 +1,4 @@
-using System;
 using System.Drawing;
-using System.IO;
 
 namespace ImageProcessing;
 
@@ -9,7 +7,7 @@ public static partial class ImageGenerator
     public static byte[] GetVectorFromImage(string path)
     {
         int index = 0;
-        Bitmap image = new Bitmap(path);
+        Bitmap image = new(path);
         int height = image.Height;
         int width = image.Width;
 

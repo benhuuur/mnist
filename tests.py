@@ -3,31 +3,36 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import mean_absolute_error, accuracy_score
 from joblib import load
 import numpy as np
+import json
 
 # df = pd.read_csv("mnist_train.csv")
-df = pd.read_csv("mnist_test.csv")
+# df = pd.read_csv("mnist_test.csv")
 
-df.dropna(inplace=True)
+# df.dropna(inplace=True)
 
-df = df[5000:10000]
+# df = df[5000:10000]
 
-Y = df["label"]
-X = df.drop("label", axis=1)
+# Y = df["label"]
+# X = df.drop("label", axis=1)
 
-loaded_pca = load("models/pca_model.pkl")
-X = loaded_pca.transform(X)
+loaded_pca = load("models/pca_model_allPCA.pkl")
+# X = loaded_pca.transform(X)
 
-loaded_model = load("models/svc_model.pkl")
-print("Test Mean Absolute Error: ", mean_absolute_error(Y, loaded_model.predict(X)))
-print("Test Accuracy: ", accuracy_score(Y, loaded_model.predict(X)))
+loaded_model = load("models/svc_model_allPCA.pkl")
+# print("Test Mean Absolute Error: ", mean_absolute_error(Y, loaded_model.predict(X)))
+# print("Test Accuracy: ", accuracy_score(Y, loaded_model.predict(X)))
 
-predictions = loaded_model.predict(X)
+# predictions = loaded_model.predict(X)
 
-plt.scatter(x=np.arange(Y.size), y=Y, s=20)
-plt.scatter(x=np.arange(predictions.size), y=predictions, s=10)
-plt.show()
+# plt.scatter(x=np.arange(Y.size), y=Y, s=20)
+# plt.scatter(x=np.arange(predictions.size), y=predictions, s=10)
+# plt.show()
 
-X = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,135,190,184,100,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,208,255,255,255,112,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,237,255,255,255,210,112,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,240,255,255,255,237,255,206,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,240,255,255,255,250,255,255,148,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,230,255,255,255,255,255,255,255,148,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,191,255,255,210,255,255,255,255,255,148,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,91,255,255,195,255,255,255,255,255,255,148,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,181,255,195,255,255,255,255,255,255,255,148,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,91,255,165,136,202,214,255,255,255,255,255,148,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,64,112,0,0,0,124,255,255,255,255,255,148,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,124,255,255,255,255,255,148,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,124,255,255,255,255,255,148,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,124,255,255,255,255,255,139,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,124,255,255,255,255,240,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,124,255,255,255,255,148,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,124,255,255,255,255,148,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,204,255,255,255,255,148,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,91,255,255,255,255,255,148,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,124,255,255,255,255,255,148,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,124,255,255,255,255,255,148,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,124,255,255,255,255,255,112,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,124,255,255,255,255,159,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,124,255,255,255,159,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,124,255,255,159,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,124,255,159,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,64,112,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+with open('data\\Row.json', 'r') as arquivo:
+    X = json.load(arquivo)
+    
+if(len(X) > loaded_pca.n_components_):
+    X = X[1:] 
 X = pd.DataFrame([X])
 X = loaded_pca.transform(X)
 predictions = loaded_model.predict(X)

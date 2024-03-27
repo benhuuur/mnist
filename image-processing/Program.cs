@@ -1,14 +1,22 @@
 using System;
+using System.Windows.Forms;
 using ImageProcessing;
 
 // var path = "mnist_train.csv";
-// var row = CsvReader<byte>.ReadRow(path, 15);
+// var row = CsvReader<byte>.ReadRow(path, 232);
 
-// Console.WriteLine(row[0].GetType());
+// Console.WriteLine(row[0]);
 
 // CsvReader<byte>.SaveToJson(row);
 // ImageGenerator.GenerateImageFromGrayVector(row);
 
-var array = ImageGenerator.GetVectorFromImage("images/test.png");
-CsvReader<byte>.SaveToJson(array);
-ImageGenerator.GenerateImageFromGrayVector(array);
+try
+{
+    var array = ImageGenerator.GetVectorFromImage(@"..\data\images\test.png");
+    CsvReader<byte>.SaveToJson(array);
+    ImageGenerator.GenerateImageFromGrayVector(array);
+}
+catch (Exception ex)
+{
+    MessageBox.Show(ex.Message);
+}
