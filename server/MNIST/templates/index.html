@@ -1,15 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload de Imagem</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 400px;
+            width: 90%;
+            /* Alterei para 90% para dar mais espaço */
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 30px;
+            /* Adicionei uma margem inferior para separar do formulário */
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .custom-file-upload {
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 20px;
+            width: calc(100% - 30px);
+            box-sizing: border-box;
+            /* Adicionei para garantir que o tamanho total seja respeitado */
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .file-name {
+            display: inline-block;
+            margin-top: 10px;
+            color: #666;
+        }
+
+        .uploaded-image {
+            width: 90%;
+            /* Definindo a largura da imagem */
+            max-width: 100%;
+            /* Aumentei para 100% */
+            margin: 0 auto;
+            /* Centraliza horizontalmente */
+            display: block;
+            margin-bottom: 20px;
+            /* Adicionei margem inferior para separar do input */
+            image-rendering: pixelated;
+            /* Evita borramento da imagem */
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 15px 0;
+            margin-top: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: calc(100% - 30px);
+            /* Fiz o botão ocupar toda a largura */
+            box-sizing: border-box;
+            /* Adicionei para garantir que o tamanho total seja respeitado */
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        input[type="file"]::placeholder {
+            color: #999;
+        }
+    </style>
 </head>
+
 <body>
-    <h2>Upload de Imagem</h2>
-    <form action="/" method="post" enctype="multipart/form-data">
-        <input type="file" name="imagem" accept="image/*">
-        <input type="submit" value="Enviar">
-    </form>
+    <div class="container">
+        <form action="/" method="post" enctype="multipart/form-data">
+            <h2>Upload de Imagem</h2>
+            <div id="image-container"></div>
+            <label for="file-upload" class="custom-file-upload">
+                Selecionar Imagem
+                <input type="file" id="file-upload" name="imagem" accept="image/*" onchange="showImagePreview(this)">
+            </label>
+            <span class="file-name" id="file-name"></span>
+            <input type="submit" value="Enviar">
+        </form>
+    </div>
+    <script>
+        function showImagePreview(input) {
+            var file = input.files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var imageContainer = document.getElementById('image-container');
+                // Limpa o conteúdo anterior
+                imageContainer.innerHTML = '';
+                // Cria um novo elemento de imagem
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.alt = "Imagem";
+                img.classList.add("uploaded-image");
+                img.style.display = 'block';
+                // Adiciona a nova imagem ao contêiner
+                imageContainer.appendChild(img);
+            }
+            reader.readAsDataURL(file);
+            document.getElementById('file-name').innerText = file.name;
+        }
+    </script>
 </body>
+
 </html>

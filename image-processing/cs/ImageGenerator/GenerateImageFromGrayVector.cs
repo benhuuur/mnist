@@ -7,7 +7,8 @@ public static partial class ImageGenerator
     public static Bitmap GenerateImageFromGrayVector(
         byte[] grayVector,
         int height = 28,
-        int width = 28
+        int width = 28,
+        string name = "../../data/images/output.png"
     )
     {
         int index = 0;
@@ -20,13 +21,13 @@ public static partial class ImageGenerator
             for (int x = 0; x < width; x++)
             {
                 byte intensity = grayVector[index];
-                pixelColor = Color.FromArgb(intensity, intensity, intensity);
+                pixelColor = Color.FromArgb(255-intensity, 255-intensity, 255-intensity);
                 index++;
                 graphics.FillRectangle(new SolidBrush(pixelColor), x, y, 1, 1);
             }
         }
 
-        bitmap.Save("../../data/images/output.png", System.Drawing.Imaging.ImageFormat.Png);
+        bitmap.Save(name, System.Drawing.Imaging.ImageFormat.Png);
         return bitmap;
     }
 }

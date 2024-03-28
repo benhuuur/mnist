@@ -2,21 +2,25 @@ using System;
 using System.Windows.Forms;
 using ImageProcessing;
 
-// var path = "mnist_train.csv";
-// var row = CsvReader<byte>.ReadRow(path, 232);
-
-// Console.WriteLine(row[0]);
-
-// CsvReader<byte>.SaveToJson(row);
-// ImageGenerator.GenerateImageFromGrayVector(row);
+var path = "../../data/mnist_train.csv";
 
 try
 {
-    var array = ImageGenerator.GetVectorFromImage(@"..\..\data\images\test.png");
-    CsvReader<byte>.SaveToJson(array);
-    ImageGenerator.GenerateImageFromGrayVector(array);
+for (uint i = 240; i < 240 + 10; i++)
+{
+    var row = CsvReader<byte>.ReadRow(path, i);
 
-    MessageBox.Show("top");
+    Console.WriteLine(row[0]);
+
+    CsvReader<byte>.SaveToJson(row);
+    ImageGenerator.GenerateImageFromGrayVector(row, name: $"../../data/images/csv{i}.png");
+}
+
+//     var array = ImageGenerator.GetVectorFromImage(@"..\..\data\images\test.png");
+//     CsvReader<byte>.SaveToJson(array);
+//     ImageGenerator.GenerateImageFromGrayVector(array);
+
+//     MessageBox.Show("top");
 }
 catch (Exception ex)
 {

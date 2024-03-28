@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confete</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        canvas {
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1 style="text-align:center;">O seu número é {{ predict_str }}</h1>
+    </div>
+
+    <canvas id="confettiCanvas"></canvas>
+
+    <script>
+        // Função para criar confetes
+        function createConfetti() {
+            var canvas = document.getElementById('confettiCanvas');
+            var ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            var pieces = [];
+            var numConfetti = 200;
+            var duration = 5000; // Tempo de duração dos confetes em milissegundos
+            var gravity = 0.2; // Gravidade
+            
+            var confettiLaunched = false; // Variável para controlar se os confetes já foram lançados
+            
+            // Função para desenhar os confetes
+            function drawConfetti() {
+                var start = Date.now();
+                
+                function draw() {
+                    var timePassed = Date.now() - start;
+                    
+                    if (timePassed > duration) {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        return;
+                    }
+                    
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    
+                    for (var i = 0; i < pieces.length; i++) {
+                        var p = pieces[i];
+                        ctx.beginPath();
+                        ctx.fillStyle = 'hsl(' + (i * 5) + ', 100%, 50%)';
+                        ctx.moveTo(p.x, p.y);
+                        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2, true);
+                        ctx.fill();
+                        
+                        // Atualiza posição dos confetes
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        
+                        // Aplica gravidade
+                        p.vy += gravity;
+                        
+                        // Reinicia confetes quando saem da tela
+                        if (p.y > canvas.height + 5) {
+                            pieces.splice(i, 1); // Remove o confete da lista
+                            i--; // Atualiza o índice após a remoção
+                        }
+                    }
+                    
+                    if (pieces.length > 0) {
+                        requestAnimationFrame(draw);
+                    }
+                }
+                
+                draw();
+            }
+            
+            // Função para lançar os confetes apenas uma vez
+            function launchConfettiOnce() {
+                if (!confettiLaunched) {
+                    confettiLaunched = true; // Confetes lançados
+                    
+                    // Cria confetes
+                    for (var i = 0; i < numConfetti; i++) {
+                        pieces.push({
+                            x: canvas.width / 2, // Posição inicial no meio da tela
+                            y: canvas.height / 2, // Posição inicial no meio da tela
+                            r: Math.random() * 20 + 5,
+                            d: Math.random() * duration,
+                            vx: Math.random() * 8 - 4, // Velocidade horizontal aleatória
+                            vy: Math.random() * -12 - 8 // Velocidade vertical aleatória (para cima)
+                        });
+                    }
+                    
+                    // Inicia o lançamento dos confetes
+                    drawConfetti();
+                }
+            }
+            
+            // Chama a função para lançar os confetes apenas uma vez quando a página carrega
+            launchConfettiOnce();
+        }
+        
+        // Chama a função para criar confetes quando a página carrega
+        window.onload = function() {
+            createConfetti();
+        };
+    </script>
+</body>
+</html>

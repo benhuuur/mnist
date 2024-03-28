@@ -35,9 +35,9 @@ public static class CsvReader<T>
         return new T[0];
     }
 
-    public static void SaveToJson(T[] row)
+    public static void SaveToJson(T[] row, string name = @"..\..\data\Row.json")
     {
         string json = JsonSerializer.Serialize<IEnumerable<T>>(row);
-        File.WriteAllText(@"..\..\data\Row.json", json);
+        File.WriteAllText(name, json);
     }
 }

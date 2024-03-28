@@ -14,8 +14,8 @@ def upload():
         gray_vector = get_vector_from_image(path_to_image)
         predict =  get_prediction(gray_vector)
         predict_str = ', '.join(str(prediction) for prediction in predict)
-        return predict_str
-    return render_template('index.html')
+        return render_template('result.html', predict_str=predict_str)
+    return render_template('index.html', predict_str=None)
 
 
 def get_vector_from_image(path):
@@ -33,12 +33,26 @@ def get_vector_from_image(path):
     return gray_vector
 
 def get_prediction(X):
-    loaded_pca = load("../models/pca_model_allPCA.pkl")
-    loaded_model = load("../models/svc_model_allPCA.pkl")
+    loaded_pca = load("../models/PCA/pca_model_all.pkl")
+    rfc_model = load("../models/algorithm/rfc_model_allPCA.pkl")
+    svc_model = load("../models/algorithm/svc_model_allPCA.pkl")
+    kng_model = load("../models/algorithm/KNG_model.pkl")
     if(len(X) > loaded_pca.n_components_):
         X = X[1:] 
     X = pd.DataFrame([X])
+    predictions =[]
+    for i in range(10):
+        predictions.append(0);
+    
+    print(X)
+
+    predictions[kng_model.predict(X)[0]] += 1.2
     X = loaded_pca.transform(X)
-    predictions = loaded_model.predict(X)
+    predictions[rfc_model.predict(X)[0]] += 1
+    predictions[svc_model.predict(X)[0]] += 1.1
+    
     print(predictions)
-    return predictions
+    for i in range(len(predictions)):
+        if predictions[i] == max(predictions):
+            return [i]
+    return [10]

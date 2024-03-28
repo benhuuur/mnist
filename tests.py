@@ -6,7 +6,7 @@ import numpy as np
 import json
 
 loaded_pca = load("models/pca/pca_model_rfc.pkl")
-loaded_model = load("models/algorithm/rfc_model.pkl")
+loaded_model = load("models/algorithm/KNG_model.pkl")
 
 # from csv
 df = pd.read_csv("data/mnist_train.csv")
@@ -17,7 +17,7 @@ df.dropna(inplace=True)
 Y = df["label"]
 X = df.drop("label", axis=1)
 
-X = loaded_pca.transform(X)
+# X = loaded_pca.transform(X)
 
 predictions = loaded_model.predict(X)
 accuracy = accuracy_score(Y, predictions)
@@ -34,9 +34,9 @@ plt.show()
 with open('data\\Row.json', 'r') as arquivo:
     X = json.load(arquivo)
     
-if(len(X) > loaded_pca.n_components_):
-    X = X[1:] 
+# if(len(X) > loaded_pca.n_components_):
+#     X = X[1:] 
 X = pd.DataFrame([X])
-X = loaded_pca.transform(X)
+# X = loaded_pca.transform(X)
 predictions = loaded_model.predict(X)
 print(predictions)
