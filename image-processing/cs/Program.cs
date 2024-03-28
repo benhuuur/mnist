@@ -2,7 +2,7 @@ using System;
 using System.Windows.Forms;
 using ImageProcessing;
 
-var path = "../../data/mnist_train.csv";
+var path = "../../data/mnist_test.csv";
 
 try
 {
