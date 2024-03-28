@@ -12,9 +12,11 @@ using ImageProcessing;
 
 try
 {
-    var array = ImageGenerator.GetVectorFromImage(@"..\data\images\test.png");
+    var array = ImageGenerator.GetVectorFromImage(@"..\..\data\images\test.png");
     CsvReader<byte>.SaveToJson(array);
     ImageGenerator.GenerateImageFromGrayVector(array);
+
+    MessageBox.Show("top");
 }
 catch (Exception ex)
 {

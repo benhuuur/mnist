@@ -26,7 +26,7 @@ public static partial class ImageGenerator
             }
         }
 
-        bitmap.Save("../data/images/output.png", System.Drawing.Imaging.ImageFormat.Png);
+        bitmap.Save("../../data/images/output.png", System.Drawing.Imaging.ImageFormat.Png);
         return bitmap;
     }
 }

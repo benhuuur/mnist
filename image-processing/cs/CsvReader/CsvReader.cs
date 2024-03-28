@@ -38,6 +38,6 @@ public static class CsvReader<T>
     public static void SaveToJson(T[] row)
     {
         string json = JsonSerializer.Serialize<IEnumerable<T>>(row);
-        File.WriteAllText(@"..\data\Row.json", json);
+        File.WriteAllText(@"..\..\data\Row.json", json);
     }
 }
