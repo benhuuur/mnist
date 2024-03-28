@@ -1,33 +1,36 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.metrics import mean_absolute_error, accuracy_score
+from sklearn.metrics import accuracy_score, precision_score
 from joblib import load
 import numpy as np
 import json
 
-# df = pd.read_csv("mnist_train.csv")
-# df = pd.read_csv("mnist_test.csv")
+loaded_pca = load("models/pca/pca_model_rfc.pkl")
+loaded_model = load("models/algorithm/rfc_model.pkl")
 
-# df.dropna(inplace=True)
+# from csv
+df = pd.read_csv("data/mnist_train.csv")
+df = pd.read_csv("data/mnist_test.csv")
 
-# df = df[5000:10000]
+df.dropna(inplace=True)
 
-# Y = df["label"]
-# X = df.drop("label", axis=1)
+Y = df["label"]
+X = df.drop("label", axis=1)
 
-loaded_pca = load("models/pca_model_allPCA.pkl")
-# X = loaded_pca.transform(X)
+X = loaded_pca.transform(X)
 
-loaded_model = load("models/svc_model_allPCA.pkl")
-# print("Test Mean Absolute Error: ", mean_absolute_error(Y, loaded_model.predict(X)))
-# print("Test Accuracy: ", accuracy_score(Y, loaded_model.predict(X)))
+predictions = loaded_model.predict(X)
+accuracy = accuracy_score(Y, predictions)
+print("Acurácia do modelo nos dados de teste:", accuracy)
+precision = precision_score(Y, predictions, average='weighted')
+print("Precisão do modelo nos dados de teste:", precision)
 
-# predictions = loaded_model.predict(X)
+plt.scatter(x=np.arange(Y.size), y=Y, s=20)
+plt.scatter(x=np.arange(predictions.size), y=predictions, s=10)
+plt.show()
 
-# plt.scatter(x=np.arange(Y.size), y=Y, s=20)
-# plt.scatter(x=np.arange(predictions.size), y=predictions, s=10)
-# plt.show()
 
+# from image
 with open('data\\Row.json', 'r') as arquivo:
     X = json.load(arquivo)
     

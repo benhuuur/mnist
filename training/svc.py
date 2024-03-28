@@ -19,9 +19,9 @@ scores = cross_val_score(SVC(), X, Y, cv=8)
 print("Scores by CV:",scores)
 
 print("PCA")
-pca = PCA(n_components=392)
+pca = PCA(n_components=784)
 pca.fit(X)
-dump(pca, "models/pca_model.pkl")
+dump(pca, "models/pca/pca_model_all.pkl")
 
 X = pca.transform(X)
 
@@ -50,4 +50,4 @@ print("Mean Absolute Error: ", mean_absolute_error(Y, model.predict(X)))
 
 print("Save best model")
 model = model.best_estimator_
-dump(model, "models/svc_model.pkl")
+dump(model, "models/algorithm/svc_model_all.pkl")

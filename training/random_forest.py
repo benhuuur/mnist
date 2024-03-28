@@ -9,19 +9,19 @@ df = pd.read_csv("data/mnist_train.csv")
 
 df.dropna(inplace=True)
 
-df = df[5000:10000]
+# df = df[5000:10000]
 
 Y = df["label"]
 X = df.drop("label", axis=1)
 
 print("CV")
 scores = cross_val_score(RandomForestClassifier(), X, Y, cv=8)
-print("Scores by CV:",scores)
+print("Scores by CV:", scores)
 
 print("PCA")
 pca = PCA(n_components=784)
 pca.fit(X)
-dump(pca, "models/pca_model_RFC.pkl")
+dump(pca, "models/pca/pca_model_RFC.pkl")
 
 X = pca.transform(X)
 
@@ -34,7 +34,9 @@ print("GridSearchCV")
 model = GridSearchCV(
     RandomForestClassifier(),
     {
-        "criterion": ["gini", "entropy", "log_loss"],
+        "random_state": [42],
+        "n_estimators": [50, 100, 200],
+        "criterion": ["gini", "entropy"]
     },
     n_jobs=-1,
 )
@@ -47,4 +49,4 @@ print("Mean Absolute Error: ", mean_absolute_error(Y, model.predict(X)))
 
 print("Save best model")
 model = model.best_estimator_
-dump(model, "models/svc_model_RFC.pkl")
+dump(model, "models/algorithm/rfc_model.pkl")
