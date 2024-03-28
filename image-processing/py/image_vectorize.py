@@ -14,4 +14,7 @@ def get_vector_from_image(path):
 
     return gray_vector
 
+path_to_image = '../data/images/test.png'
+gray_vector = get_vector_from_image(path_to_image)
 
+print (gray_vector)
