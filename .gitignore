@@ -3,3 +3,4 @@ mnist_train.csv
 models/pca/*
 models/algorithm/*
 models.zip
+mnist.sln
