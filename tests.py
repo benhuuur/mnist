@@ -5,7 +5,7 @@ from joblib import load
 import numpy as np
 import json
 
-loaded_pca = load("models/pca/pca_model_rfc.pkl")
+# loaded_pca = load("models/pca/pca_model_rfc.pkl")
 loaded_model = load("models/algorithm/KNG_model.pkl")
 
 # from csv

@@ -2,3 +2,4 @@ mnist_test.csv
 mnist_train.csv
 models/pca/*
 models/algorithm/*
+models.zip
